@@ -3,15 +3,12 @@ import java.io.*;
 
 public class Server {
     public static final int DEFAULT_PORT = 8080;
+    ServerSocket socket = new ServerSocket( DEFAULT_PORT );
+    Socket client = null;
 
-    public static void Start() {
-        ServerSocket socket = new ServerSocket( DEFAULT_PORT );
-        Socket client = null;
-
+    public void Start() {
         while( true ) {
             client = socket.accept();
-            outputRequest( client );
-            sendResponse( client );
             client.close();
         }
     }
