@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-//blahblahblah
 
 public class WebServer {
     public static final int PORT = 8080;
