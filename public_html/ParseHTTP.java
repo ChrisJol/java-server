@@ -1,13 +1,15 @@
-package htmlpackage;
+package public_html;
+
+import java.net.*;
+import java.io.*;
 
 public class ParseHTTP {
 
-    public static void outputRequest(Socket client) {
-
+    public static void outputRequest(Socket client) throws IOException {
         String line;
-        BufferedReader reader = new BufferedReader(
-            new InputStreamReader(client.getInputStream())
-        );
+        System.out.println("got this far");
+        BufferedReader reader = new BufferedReader( new InputStreamReader(client.getInputStream()) );
+
         while(true) {
             line = reader.readLine();
             System.out.println("> " + line);
@@ -16,6 +18,6 @@ public class ParseHTTP {
                 break;
             }
         }
-        outputLineBreak();
+//        outputLineBreak();
     }
 }

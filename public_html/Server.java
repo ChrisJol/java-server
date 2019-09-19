@@ -1,4 +1,5 @@
 package public_html;
+
 import java.net.*;
 import java.io.*;
 
@@ -8,13 +9,12 @@ public class Server {
     public void Start() throws IOException {
         ServerSocket socket = new ServerSocket( DEFAULT_PORT );
         Socket client = null;
-        System.out.println("Starts program");
 
         while( true ) {
+            System.out.println("Starts");
             client = socket.accept();
-            //ParseHTTP.outputRequest(client);
+            ParseHTTP.outputRequest(client);
             client.close();
-            //test
         }
     }
 }

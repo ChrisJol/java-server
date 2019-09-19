@@ -1,5 +1,5 @@
 .DS_Store
-WebServer.class
 *.iml
 *.class
 *.xml
+*.idea
