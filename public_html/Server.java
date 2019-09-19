@@ -14,6 +14,7 @@ public class Server {
             client = socket.accept();
             //ParseHTTP.outputRequest(client);
             client.close();
+            //test
         }
     }
 }
