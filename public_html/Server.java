@@ -1,7 +1,6 @@
-package htmlpackage;
+package public_html;
 import java.net.*;
 import java.io.*;
-
 
 public class Server {
     public static final int DEFAULT_PORT = 8080;
@@ -9,7 +8,8 @@ public class Server {
     public void Start() throws IOException {
         ServerSocket socket = new ServerSocket( DEFAULT_PORT );
         Socket client = null;
-        //System.out.println("Starts program");
+        System.out.println("Starts program");
+
         while( true ) {
             client = socket.accept();
             //ParseHTTP.outputRequest(client);

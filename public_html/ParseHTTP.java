@@ -1,3 +1,5 @@
+package htmlpackage;
+
 public class ParseHTTP {
 
     public static void outputRequest(Socket client) {
