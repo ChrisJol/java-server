@@ -1,4 +1,4 @@
-import public_html.Server;
+import core.Server;
 
 import java.net.*;
 import java.io.*;

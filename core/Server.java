@@ -1,4 +1,4 @@
-package public_html;
+package core;
 
 import java.net.*;
 import java.io.*;
