@@ -11,9 +11,9 @@ public class Server {
         Socket client = null;
 
         while( true ) {
-            System.out.println("Starts");
+            System.out.println("Server running...");
             client = socket.accept();
-            ParseHTTP.outputRequest(client);
+            Request.parse(client);
             client.close();
         }
     }

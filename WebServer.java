@@ -1,4 +1,4 @@
-import core.Server;
+import core.*;
 
 import java.net.*;
 import java.io.*;
