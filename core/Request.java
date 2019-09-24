@@ -27,8 +27,8 @@ public class Request {
                 header = reader.readLine();
             }
 
-            if(headers.get("Content-Length") != null){
-                String body = reader.readLine(); //read in body
+            if(headers.get("Content-Length") != null){ //read in body
+                String body = reader.readLine();
                 while (body != null) {
                     // System.out.println(body);
                     body = reader.readLine();
@@ -36,7 +36,8 @@ public class Request {
             }
 
             sendResponse(client); //this is a temporary method
-        }catch(IOException e){
+        }
+        catch(IOException e){
             e.printStackTrace();
         }
     }
