@@ -2,30 +2,42 @@ package core;
 
 import java.net.*;
 import java.io.*;
+import java.util.*;
 // import java.io.PrintWriter;
 
 public class Request {
-    String uri;
+    String URI;
     String verb;
     String httpVersion;
+    Map<String, String> headers = new HashMap<String, String>();
 
     public void parse(Socket client) {
-        String line;
-
         try{
             BufferedReader reader = new BufferedReader( new InputStreamReader(client.getInputStream()) );
 
-            while(true) {
-                line = reader.readLine();
-                // String[] httpRequest = line.split(" ");
-                System.out.println(line);
+            String[] request = reader.readLine().split(" "); //read in HTTP request
+            verb = request[0];
+            URI = request[1];
+            httpVersion = request[2];
 
-                sendResponse(client); //this is a temporary method
+            String header = reader.readLine(); //read in headers
+            while(header.length() > 0) {
+                String[] lineHeader = header.split(": ");
+                headers.put(lineHeader[0], lineHeader[1]);
+                header = reader.readLine();
             }
+
+            if(headers.get("Content-Length") != null){
+                String body = reader.readLine(); //read in body
+                while (body != null) {
+                    // System.out.println(body);
+                    body = reader.readLine();
+                }
+            }
+
+            sendResponse(client); //this is a temporary method
         }catch(IOException e){
-            System.out.println("IOException, most likely the request was read in and readLine() threw and error when it reached the end of the request, we should try to find a solution for this");
-            // System.out.println(e.getMessage());
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -33,11 +45,11 @@ public class Request {
         OutputStream outputStream = client.getOutputStream();
         PrintWriter printWriter = new PrintWriter(outputStream);
 
-        printWriter.println("HTTP/1.0 200 OK");
-        printWriter.println("Content-Length: 12");
-        printWriter.println("");
-        printWriter.println("body content");
-        printWriter.flush();
+        printWriter.println("HTTP/1.0 200 OK"); // version status_code reason_phrase
+        printWriter.println("Content-Length: 12"); //headers ...
+        printWriter.println(""); // blank line to indicate body is next (if content-length exists)
+        printWriter.println("body content"); //body
+        printWriter.flush(); //send
         
     }
 }
