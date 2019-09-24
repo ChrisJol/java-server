@@ -12,19 +12,38 @@ public class Request {
         String line;
         BufferedReader reader = new BufferedReader( new InputStreamReader(client.getInputStream()) );
 
-        while(true) {
+         while(true) {
             line = reader.readLine();
             String[] httpRequest = line.split(" ");
 
-            for(int i = 0; i < httpRequest.length; i++){
-                System.out.println("This is what we're looking for: " + httpRequest[i]);
-            }
+            //this.verb = httpRequest[0];
 
-            // System.out.println("> " + line);
+            requests(httpRequest);
+                                
+         }
+    }
 
-            if(line.contains("END")) {
+    private static void requests(String[] param) {
+        switch (param) {
+            case "GET":
+                System.out.println("This is the GET request");
+                System.out.println("Retrieve data from: " + param[1]);
                 break;
-            }
+            case "HEAD":
+                System.out.println("This is the HEAD request");
+                break;
+            case "POST":
+                System.out.println("This is the POST request");
+                break;
+            case "PUT":
+                System.out.println("This is the PUT request");
+                break;
+            case "DELETE":
+                System.out.println("This is the DELETE request");
+                break;                                                  
+            default:
+                break;
         }
+
     }
 }
