@@ -36,9 +36,9 @@ public class ConfigReader {
             Properties properties = new Properties();
             properties.load(reader);
         
-            serverRoot = properties.getProperty("ServerRoot");
-            docRoot = properties.getProperty("DocumentRoot");
-            logFile = properties.getProperty("LogFile");
+            serverRoot = properties.getProperty("ServerRoot").replace("\"", "");
+            docRoot = properties.getProperty("DocumentRoot").replace("\"", "");
+            logFile = properties.getProperty("LogFile").replace("\"", "");
             defaultPort = Integer.parseInt(properties.getProperty("Listen"));
 
             reader.close();

@@ -5,13 +5,14 @@ import java.io.*;
 
 public class Server {
     public final String configFilePath = "./conf/httpd.conf.txt";
+    static ConfigReader configuration;
     
     public void Start() throws IOException {
-        ConfigReader cfReader = new ConfigReader(configFilePath);
-        cfReader.load();
+        configuration = new ConfigReader(configFilePath);
+        configuration.load();
 
         System.out.println("Server running...");
-        ServerSocket socket = new ServerSocket( cfReader.getDefaultPort() );
+        ServerSocket socket = new ServerSocket( configuration.getDefaultPort() );
         Socket client = null;
 
         while( true ) {

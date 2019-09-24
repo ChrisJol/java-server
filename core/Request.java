@@ -17,7 +17,8 @@ public class Request {
 
             while(true) {
                 line = reader.readLine();
-                String[] httpRequest = line.split(" ");
+                // String[] httpRequest = line.split(" ");
+                System.out.println(line);
 
                 sendResponse(client); //this is a temporary method
             }
@@ -38,29 +39,5 @@ public class Request {
         printWriter.println("body content");
         printWriter.flush();
         
-    }
-
-    private void requests(String[] param) {
-        switch (param[0]) {
-            case "GET":
-                System.out.println("This is the GET request");
-                System.out.println("Retrieve data from: " + param[1]);
-                break;
-            case "HEAD":
-                System.out.println("This is the HEAD request");
-                break;
-            case "POST":
-                System.out.println("This is the POST request");
-                break;
-            case "PUT":
-                System.out.println("This is the PUT request");
-                break;
-            case "DELETE":
-                System.out.println("This is the DELETE request");
-                break;                                                  
-            default:
-                break;
-        }
-
     }
 }
