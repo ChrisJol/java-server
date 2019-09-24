@@ -1,7 +1,7 @@
-ServerRoot "/Users/jrob/workspace/server/"
-DocumentRoot "/Users/jrob/workspace/server/public_html/"
+ServerRoot "/Users/chris/Desktop/fall-2019-web-server-bernardo_jol/core"
+DocumentRoot "/Users/chris/Desktop/fall-2019-web-server-bernardo_jol/public_html"
 Listen 8080
-LogFile "/Users/jrob/workspace/server/logs/log.txt"
+LogFile "/Users/chris/Desktop/fall-2019-web-server-bernardo_jol/logs/log.txt"
 Alias /ab/ "/Users/jrob/workspace/server/public_html/ab1/ab2/"
 Alias /~traciely/ "/Users/jrob/workspace/server/public_html/"
 ScriptAlias /cgi-bin/ "/Users/jrob/workspace/server/public_html/cgi-bin/"
