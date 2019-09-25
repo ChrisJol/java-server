@@ -2,15 +2,14 @@ package core;
 
 public class Resource{
     String URI;
-    ConfigReader configuration;
 
-    Resource(String uri, ConfigReader configuration){
+    Resource(String uri){
         this.URI = uri;
-        this.configuration = configuration;
+        // System.out.println(docRoot);
     }
 
     public String absolutePath(){
-        return configuration.getDocRoot() + URI;
+        return URI;
     }
 
     public boolean isScript(){

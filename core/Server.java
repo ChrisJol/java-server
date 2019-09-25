@@ -12,10 +12,8 @@ public class Server {
     
     public void Start() throws IOException {
         request = new Request();
-        configuration = new ConfigReader(configFilePath);
+        configuration = ConfigReader.getInstance();
         socket = new ServerSocket( configuration.getDefaultPort() );
-        
-        configuration.load();
         System.out.println("Server running...");
 
         while( true ) {

@@ -4,29 +4,40 @@ import java.io.*;
 import java.util.Properties;
 
 public class ConfigReader {
+    private static ConfigReader single_instance = null; //singleton instance
+
     private File configFile;
     private String serverRoot;
     private String docRoot;
     private String logFile;
     private int defaultPort;
 
-    ConfigReader(String fileName){
+    private ConfigReader(String fileName){
         configFile = new File(fileName);
+        this.load();
     }
 
-    String getServerRoot(){
+    public static ConfigReader getInstance(){
+        if(single_instance == null){
+            single_instance = new ConfigReader("./conf/httpd.conf.txt");
+        }
+
+        return single_instance;
+    }
+
+    public String getServerRoot(){
         return serverRoot;
     }
 
-    String getDocRoot(){
+    public String getDocRoot(){
         return docRoot;
     }
 
-    String getLogFile(){
+    public String getLogFile(){
         return logFile;
     }
 
-    int getDefaultPort(){
+    public int getDefaultPort(){
         return defaultPort;
     }
 
@@ -35,7 +46,7 @@ public class ConfigReader {
             FileReader reader = new FileReader(configFile);
             Properties properties = new Properties();
             properties.load(reader);
-        
+
             serverRoot = properties.getProperty("ServerRoot").replace("\"", "");
             docRoot = properties.getProperty("DocumentRoot").replace("\"", "");
             logFile = properties.getProperty("LogFile").replace("\"", "");
