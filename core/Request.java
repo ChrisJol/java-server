@@ -3,7 +3,6 @@ package core;
 import java.net.*;
 import java.io.*;
 import java.util.*;
-// import java.io.PrintWriter;
 
 public class Request {
     String URI;
@@ -23,8 +22,8 @@ public class Request {
 
             String header = reader.readLine(); //read in headers
             while(header.length() > 0) {
-                String[] lineHeader = header.split(": ");
-                headers.put(lineHeader[0], lineHeader[1]);
+                String[] lineHeaders = header.split(": ");
+                headers.put(lineHeaders[0], lineHeaders[1]);
                 header = reader.readLine();
             }
 
