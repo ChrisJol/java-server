@@ -10,6 +10,7 @@ public class Request {
     String verb;
     String httpVersion;
     Map<String, String> headers = new HashMap<String, String>();
+    StringBuilder body;
 
     public void parse(Socket client) {
         try{
@@ -28,10 +29,10 @@ public class Request {
             }
 
             if(headers.get("Content-Length") != null){ //read in body
-                String body = reader.readLine();
-                while (body != null) {
-                    // System.out.println(body);
-                    body = reader.readLine();
+                String requestBody = reader.readLine();
+                while (requestBody != null) {
+                    body.append(requestBody).append("\r\n");
+                    requestBody = reader.readLine();
                 }
             }
 
