@@ -3,4 +3,4 @@
 *.class
 *.xml
 *.idea
-httpd.conf.txt
+conf/httpd.conf.txt

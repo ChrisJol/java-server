@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class ConfigReader {
+    File configFile;
     private static ConfigReader single_instance = null; //singleton instance
     Map<String, String> configParams = new HashMap<String, String>();
 
@@ -34,6 +35,10 @@ public class ConfigReader {
 
     public int getDefaultPort(){
         return Integer.parseInt(configParams.get("Listen"));
+    }
+
+    public int getDirectoryIndex() {
+        return configParams.get("DirectoryIndex");
     }
 
     public String getAlias(String alias){

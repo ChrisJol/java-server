@@ -2,18 +2,36 @@ package core;
 
 public class Resource{
     String URI;
+    ConfigReader configuration;
+    File resolvedFile;
 
     Resource(String uri){
         this.URI = uri;
-        // System.out.println(docRoot);
+        configuration = ConfigReader.getInstance();
+    }
+
+    private String load(){
+        if(isScript()){
+            URI = configuration.getAlias(URI);
+        } else{
+            URI = absolutePath();
+        }
+
+        resolvedFile = new File(URI);
+        
+        if(resolvedFile.isFile()){
+            return URI;
+        } else{
+            return URI + configuration.getDirectoryIndex();
+        }
     }
 
     public String absolutePath(){
-        return URI;
+        return  configuration.getDocRoot() + URI;
     }
 
-    public boolean isScript(){
-        return false;
+    private boolean isScript(){
+        return configuration.getAlias(URI) != null;
     }
 
     public boolean isProtected(){
