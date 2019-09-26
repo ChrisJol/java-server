@@ -37,7 +37,7 @@ public class ConfigReader {
         return Integer.parseInt(configParams.get("Listen"));
     }
 
-    public int getDirectoryIndex() {
+    public String getDirectoryIndex() {
         return configParams.get("DirectoryIndex");
     }
 

@@ -1,5 +1,7 @@
 package core;
 
+import java.io.*;
+
 public class Resource{
     String URI;
     ConfigReader configuration;
