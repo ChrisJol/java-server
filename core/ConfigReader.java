@@ -5,15 +5,7 @@ import java.util.*;
 
 public class ConfigReader {
     private static ConfigReader single_instance = null; //singleton instance
-
     Map<String, String> configParams = new HashMap<String, String>();
-
-    private File configFile;
-    private String serverRoot;
-    private String docRoot;
-    private String logFile;
-    private String alias;
-    private int defaultPort;
 
     private ConfigReader(String fileName){
         configFile = new File(fileName);
@@ -65,14 +57,6 @@ public class ConfigReader {
                 property = reader.readLine();
             }
             reader.close();
-
-            System.out.println(getServerRoot());
-            System.out.println(getDocRoot());
-            System.out.println(getLogFile());
-            System.out.println(getDefaultPort());
-            System.out.println(getAlias("/ab/"));
-            System.out.println(getAlias("/cgi-bin/"));
-            System.out.println(getAlias("/~traciely/"));
         }
         catch(FileNotFoundException e){
             System.out.println("File not found in classpath");
@@ -80,29 +64,5 @@ public class ConfigReader {
         catch(IOException e){
             e.printStackTrace();
         }
-
-
-        // try{
-        //     FileReader reader = new FileReader(configFile);
-        //     Properties properties = new Properties();
-        //     properties.load(reader);
-
-        //     serverRoot = properties.getProperty("ServerRoot").replace("\"", "");
-        //     docRoot = properties.getProperty("DocumentRoot").replace("\"", "");
-        //     logFile = properties.getProperty("LogFile").replace("\"", "");
-        //     alias = properties.getProperty("Alias").replace("\"", "");
-        //     defaultPort = Integer.parseInt(properties.getProperty("Listen"));
-
-        //     System.out.println(alias);
-
-        //     reader.close();
-
-        // }catch(FileNotFoundException e){
-        //     System.out.println("File not found in classpath");
-        // }catch(IOException e){
-        //     e.printStackTrace();
-        // }
-
-
     }
 }
