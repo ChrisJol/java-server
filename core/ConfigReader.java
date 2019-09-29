@@ -47,10 +47,9 @@ public class ConfigReader {
 
     private void load(){
         try {
-            FileReader fileReader = new FileReader(configFile);
-            BufferedReader reader = new BufferedReader(fileReader);
+            BufferedReader reader = new BufferedReader(new FileReader(configFile));
+            
             String property = reader.readLine();
-
             while(property != null) {
                 String[] properties = property.split(" ");
 
