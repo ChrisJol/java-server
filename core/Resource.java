@@ -11,11 +11,12 @@ public class Resource{
         configuration = ConfigReader.getInstance();
     }
 
-    private String getResolvedFilePath(){
-        if( isScript() ) return configuration.getAlias(URI);
-        URI = absolutePath();
+    public String getResolvedFilePath(){
+        URI = isScript() ? configuration.getAlias(URI) : absolutePath();
         File resolvedFile = new File( URI );
-        if( !resolvedFile.isFile() ) return URI + configuration.getDirectoryIndex();
+
+        if( resolvedFile.isDirectory() ) URI += "/" + configuration.getDirectoryIndex();
+
         return URI;
     }
 
