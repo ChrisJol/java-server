@@ -50,7 +50,7 @@ public class ConfigReader {
         return configParams.get(alias);
     }
 
-    private void load(){
+    private void load(){ //throws indexOutOfBound error when conf isn't formatted properly, we should try to come up with a fix
         try {
             BufferedReader reader = new BufferedReader(new FileReader(configFile));
 
