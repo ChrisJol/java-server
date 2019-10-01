@@ -5,14 +5,18 @@ import java.io.*;
 public class Resource{
     String URI;
     ConfigReader configuration;
+    boolean isScript = false;
+    String resolvedFilePath;
 
     Resource(String uri){
         this.URI = uri;
         configuration = ConfigReader.getInstance();
+        isScript();
+        resolvedFilePath = getResolvedFilePath();
     }
 
     public String getResolvedFilePath(){
-        URI = isScript() ? configuration.getAlias(URI) : absolutePath();
+        URI = isScript ? configuration.getAlias(URI) : absolutePath();
         File resolvedFile = new File( URI );
 
         if( resolvedFile.isDirectory() ) URI += "/" + configuration.getDirectoryIndex();
@@ -24,7 +28,9 @@ public class Resource{
         return  configuration.getDocRoot() + URI;
     }
 
-    private boolean isScript(){
-        return configuration.getAlias(URI) != null;
+    private void isScript(){
+        if(configuration.getScriptAlias(URI) != null){
+            isScript = true;
+        }
     }
 }

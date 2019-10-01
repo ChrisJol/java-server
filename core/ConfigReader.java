@@ -10,6 +10,7 @@ public class ConfigReader {
 
     File configFile;
     Map<String, String> configParams = new HashMap<String, String>();
+    Map<String, String> scriptAlii = new HashMap<String, String>();
 
     private ConfigReader(String fileName){
         configFile = new File(fileName);
@@ -50,6 +51,10 @@ public class ConfigReader {
         return configParams.get(alias);
     }
 
+    public String getScriptAlias(String scriptAlias){
+        return scriptAlii.get(scriptAlias);
+    }
+
     private void load(){ //throws indexOutOfBound error when conf isn't formatted properly, we should try to come up with a fix
         try {
             BufferedReader reader = new BufferedReader(new FileReader(configFile));
@@ -58,9 +63,13 @@ public class ConfigReader {
             while(property != null) {
                 String[] properties = property.split(" ");
 
-                if(properties[0].equals("Alias") || properties[0].equals("ScriptAlias")) {
+                if(properties[0].equals("ScriptAlias")) {
+                    scriptAlii.put(properties[1], properties[2].replace("\"", ""));
+                }
+                else if(properties[0].equals("Alias")){
                     configParams.put(properties[1], properties[2].replace("\"", ""));
-                } else {
+                }
+                else {
                     configParams.put(properties[0], properties[1].replace("\"", ""));
                 }
                 property = reader.readLine();
