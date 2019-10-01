@@ -3,3 +3,7 @@
 *.class
 *.xml
 *.idea
+conf
+conf/httpd.conf.txt
+httpd.conf.txt
+httpd.conf
