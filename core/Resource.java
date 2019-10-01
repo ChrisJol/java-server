@@ -5,38 +5,26 @@ import java.io.*;
 public class Resource{
     String URI;
     ConfigReader configuration;
-    File resolvedFile;
 
     Resource(String uri){
         this.URI = uri;
         configuration = ConfigReader.getInstance();
     }
 
-    private String load(){
-        if(isScript()){
-            URI = configuration.getAlias(URI);
-        } else{
-            URI = absolutePath();
-        }
+    public String getResolvedFilePath(){
+        URI = isScript() ? configuration.getAlias(URI) : absolutePath();
+        File resolvedFile = new File( URI );
 
-        resolvedFile = new File(URI);
-        
-        if(resolvedFile.isFile()){
-            return URI;
-        } else{
-            return URI + configuration.getDirectoryIndex();
-        }
+        if( resolvedFile.isDirectory() ) URI += "/" + configuration.getDirectoryIndex();
+
+        return URI;
     }
 
-    public String absolutePath(){
+    private String absolutePath(){
         return  configuration.getDocRoot() + URI;
     }
 
     private boolean isScript(){
         return configuration.getAlias(URI) != null;
-    }
-
-    public boolean isProtected(){
-        return false;
     }
 }

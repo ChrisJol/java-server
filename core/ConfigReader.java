@@ -4,8 +4,11 @@ import java.io.*;
 import java.util.*;
 
 public class ConfigReader {
-    File configFile;
+    private final int DEFAULT_PORT = 8080;
+    private final String DEFAULT_DIRECTORY_INDEX = "index.html";
     private static ConfigReader single_instance = null; //singleton instance
+
+    File configFile;
     Map<String, String> configParams = new HashMap<String, String>();
 
     private ConfigReader(String fileName){
@@ -34,23 +37,24 @@ public class ConfigReader {
     }
 
     public int getDefaultPort(){
-        return Integer.parseInt(configParams.get("Listen"));
+        String defaultPort = configParams.get("Listen");
+        return ( defaultPort == null ) ? DEFAULT_PORT : Integer.parseInt(defaultPort);
     }
 
     public String getDirectoryIndex() {
-        return configParams.get("DirectoryIndex");
+        String directoryIndex = configParams.get("DirectoryIndex");
+        return ( directoryIndex == null ) ? DEFAULT_DIRECTORY_INDEX : directoryIndex;
     }
 
     public String getAlias(String alias){
         return configParams.get(alias);
     }
 
-    private void load(){
+    private void load(){ //throws indexOutOfBound error when conf isn't formatted properly, we should try to come up with a fix
         try {
-            FileReader fileReader = new FileReader(configFile);
-            BufferedReader reader = new BufferedReader(fileReader);
-            String property = reader.readLine();
+            BufferedReader reader = new BufferedReader(new FileReader(configFile));
 
+            String property = reader.readLine();
             while(property != null) {
                 String[] properties = property.split(" ");
 

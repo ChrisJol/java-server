@@ -35,6 +35,11 @@ public class Request {
                 }
             }
 
+            Resource resource = new Resource(URI);
+            String filePath = resource.getResolvedFilePath();
+
+            System.out.println(filePath);
+
             sendResponse(client); //this is a temporary method
         }
         catch(IOException e){
