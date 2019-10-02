@@ -16,7 +16,9 @@ public class Server {
         while( true ) {
             Socket client = socket.accept();
             request.parse(client);
-            Response response = new Response();
+            Resource resource = new Resource(request);
+            ResponseBuilder responseBuilder = new ResponseBuilder(request, resource);
+            Response response = responseBuilder.build();
             response.send(client.getOutputStream());
             client.close();
         }

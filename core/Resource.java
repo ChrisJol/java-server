@@ -8,8 +8,8 @@ public class Resource{
     boolean isScript = false;
     String resolvedFilePath;
 
-    Resource(String uri){
-        this.URI = uri;
+    Resource(Request request){
+        this.URI = request.URI;
         configuration = ConfigReader.getInstance();
         isScript();
         resolvedFilePath = getResolvedFilePath();
