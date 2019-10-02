@@ -34,28 +34,9 @@ public class Request {
                     requestBody = reader.readLine();
                 }
             }
-
-            Resource resource = new Resource(URI);
-            String filePath = resource.getResolvedFilePath();
-
-            System.out.println(filePath);
-
-            sendResponse(client); //this is a temporary method
         }
         catch(IOException e){
             e.printStackTrace();
         }
-    }
-
-    private void sendResponse(Socket client) throws IOException{
-        OutputStream outputStream = client.getOutputStream();
-        PrintWriter printWriter = new PrintWriter(outputStream);
-
-        printWriter.println("HTTP/1.0 200 OK"); // version status_code reason_phrase
-        printWriter.println("Content-Length: 12"); //headers ...
-        printWriter.println(""); // blank line to indicate body is next (if content-length exists)
-        printWriter.println("body content"); //body
-        printWriter.flush(); //send
-        
     }
 }
