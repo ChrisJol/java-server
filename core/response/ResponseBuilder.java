@@ -1,8 +1,15 @@
 package core.response;
 
-import java.util.*;
-import java.io.*;
-import core.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import core.ConfigReader;
+import core.Request;
+import core.Resource;
 
 public class ResponseBuilder{
     Request request;

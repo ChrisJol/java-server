@@ -1,7 +1,12 @@
 package core;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ConfigReader {
     private final int DEFAULT_PORT = 8080;

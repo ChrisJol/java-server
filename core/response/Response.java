@@ -1,7 +1,9 @@
 package core.response;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Response{
     int statusCode;

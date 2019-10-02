@@ -1,6 +1,6 @@
 package core;
 
-import java.io.*;
+import java.io.File;
 
 public class Resource{
     String URI;

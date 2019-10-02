@@ -1,8 +1,9 @@
 package core;
 
 import core.response.*;
-import java.net.*;
-import java.io.*;
+import java.net.Socket;
+import java.net.ServerSocket;
+import java.io.IOException;
 
 public class Server {
     public final String configFilePath = "./conf/httpd.conf.txt";
