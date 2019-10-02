@@ -12,6 +12,7 @@ public class ResponseBuilder{
     String reasonPhrase;
     Map<String, String> headers = new HashMap<String, String>();
     String body;
+    int contentLength;
 
     public ResponseBuilder(Request request, Resource resource){
         this.request = request;
@@ -19,14 +20,18 @@ public class ResponseBuilder{
     }
 
     public ResponseBuilder setStatusCode(){
+        statusCode = 200;
         return this;
     }
 
     public ResponseBuilder setReasonPhrase(){
+        reasonPhrase = "OK";
         return this;
     }
 
     public ResponseBuilder setHeaders(){
+        headers.put("Content-Type", "text/html");
+        headers.put("Content-Length", String.valueOf(contentLength));
         return this;
     }
 
@@ -38,9 +43,10 @@ public class ResponseBuilder{
 
             inputStream.read(fileByteArray, 0, fileByteArray.length);
             body = new String(fileByteArray, "UTF-8");
+            contentLength = fileByteArray.length;
         }
         catch(FileNotFoundException e){
-            System.out.println("Requested file does not exist: Response.java: 23");
+            System.out.println("Requested file does not exist: " + resource.getResolvedFilePath());
         }
         catch(IOException e){
             e.printStackTrace();
@@ -55,7 +61,7 @@ public class ResponseBuilder{
         response.reasonPhrase = reasonPhrase;
         response.headers = headers;
         response.body = body;
-        
+
         return response;
     }
 }
