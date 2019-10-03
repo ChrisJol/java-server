@@ -25,7 +25,8 @@ import java.io.IOException;
     public Htpassword( String filename ) throws IOException {
         configuration = ConfigReader.getInstance();
         authReader = new AuthReader();
-        authReader.readPasswordFile(configuration.getAccessFile());
+        // authReader.readPasswordFile(configuration.getAccessFile()); //TODO: implement
+        authReader.readAccessFile(configuration.getAccessFile());
     }
 
     public boolean isAuthorized( String authInfo ) {
@@ -37,14 +38,14 @@ import java.io.IOException;
         );
         // The string is the key:value pair username:password
         String[] tokens = credentials.split( ":" );
-        System.out.println(tokens[0] + "\n" + tokens[1]);
+        // System.out.println(tokens[0] + "\n" + tokens[1]);
 
         //Look through the .htpassword file and check to see if tokens[1] match username in .htaccess file
-
-        String filePath = "/Users/nicolebernardo/Documents/Documents/FALL 2019 CLASSES/CSC 667/Project1/fall-2019-web-server-bernardo_jol/public_html/.htaccess"; //for testing purposes
-        authReader.readAcessFile(filePath);
+        
+        String filePath = configuration.getAccessFile();
+        authReader.readAccessFile(filePath);
        
-        System.out.println(authReader.userHasAccess(tokens[0]));
+        System.out.println(authReader.userHasAccess(tokens[0])); //testing purposes
 
         return authReader.userHasAccess(tokens[0]);
     }

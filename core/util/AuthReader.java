@@ -30,14 +30,14 @@ public class AuthReader {
             reader.close();
         } 
         catch(FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("AutheReader.java readPass: File not found");
         } 
         catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void readAcessFile(String fileName) {
+    public void readAccessFile(String fileName) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String user = reader.readLine();
@@ -49,7 +49,7 @@ public class AuthReader {
             reader.close();
         } 
         catch(FileNotFoundException e) {
-            System.out.println("Authreader.java: File not found");
+            System.out.println("Authreader.java readAccess: File not found");
         } 
         catch(IOException e) {
             e.printStackTrace();
