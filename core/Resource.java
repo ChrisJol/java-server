@@ -1,5 +1,6 @@
 package core;
 
+import core.util.ConfigReader;
 import java.io.File;
 
 public class Resource{

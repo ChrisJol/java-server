@@ -1,9 +1,15 @@
 package core;
 
+import core.util.AuthReader;
+import core.util.ConfigReader;
+
+import java.util.Scanner;
+import java.util.Base64;
+import java.util.Map;
+import java.util.HashMap;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.util.*;
-import java.io.*;
+import java.io.File;
 
 import java.io.IOException;
 
@@ -13,21 +19,12 @@ import java.io.IOException;
 
     // ConfigReader configuration;
     private HashMap<String, String> passwords;
+    ConfigReader configReader;
+    AuthReader authReader;
 
     public Htpassword( String filename ) throws IOException {
-        //super( filename );
-        System.out.println( "Password file: " + filename );
-
-        this.passwords = new HashMap<String, String>();
-        //this.load();
-    }
-
-    protected void parseLine( String line ) {
-        String[] tokens = line.split( ":" );
-
-        if( tokens.length == 2 ) {
-        passwords.put( tokens[ 0 ], tokens[ 1 ].replace( "{SHA}", "" ).trim() );
-        }
+        configReader = ConfigReader.getInstance();
+        authReader = new AuthReader(configReader.getAccessFile());
     }
 
     public boolean isAuthorized( String authInfo ) {
@@ -37,7 +34,7 @@ import java.io.IOException;
         Base64.getDecoder().decode( authInfo ),
         Charset.forName( "UTF-8" )
         );
-
+        System.out.println(authInfo);
         // The string is the key:value pair username:password
         String[] tokens = credentials.split( ":" );
 
@@ -52,7 +49,7 @@ import java.io.IOException;
         String filePath = "AuthUserFile.txt"; //for testing purposes
 
         try {
-
+ 
             authUserFile = new Scanner(new File(filePath));
             authUserFile.useDelimiter(":|\n|[{}]"); // using example jrob:{SHA}cRDtpNCeBiql5KOQsKVyrA0sAiA=
 

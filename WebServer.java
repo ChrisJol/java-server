@@ -1,7 +1,5 @@
 import core.*;
-
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
 
 public class WebServer {
     public static void main(String[] args){

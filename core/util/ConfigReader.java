@@ -1,4 +1,4 @@
-package core;
+package core.util;
 
 import java.io.File;
 import java.io.BufferedReader;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class ConfigReader {
     private final int DEFAULT_PORT = 8080;
     private final String DEFAULT_DIRECTORY_INDEX = "index.html";
+    private final String DEFAULT_ACCESS_FILE = "AuthUserFile";
     private static ConfigReader single_instance = null; //singleton instance
 
     File configFile;
@@ -60,11 +61,16 @@ public class ConfigReader {
         return scriptAlii.get(scriptAlias);
     }
 
+    public String getAccessFile(){
+        String accessFile = configParams.get("AccessFile");
+        return (accessFile == null) ? DEFAULT_ACCESS_FILE : accessFile;
+    }
+
     private void load(){ //throws indexOutOfBound error when conf isn't formatted properly, we should try to come up with a fix
         try {
             BufferedReader reader = new BufferedReader(new FileReader(configFile));
-
             String property = reader.readLine();
+
             while(property != null) {
                 String[] properties = property.split(" ");
 
@@ -83,6 +89,7 @@ public class ConfigReader {
         }
         catch(FileNotFoundException e){
             System.out.println("File not found in classpath");
+            e.printStackTrace();
         }
         catch(IOException e){
             e.printStackTrace();

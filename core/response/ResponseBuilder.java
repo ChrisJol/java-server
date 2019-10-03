@@ -7,7 +7,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import core.ConfigReader;
 import core.Request;
 import core.Resource;
 
