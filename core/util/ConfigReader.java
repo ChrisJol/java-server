@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class ConfigReader {
     private final int DEFAULT_PORT = 8080;
     private final String DEFAULT_DIRECTORY_INDEX = "index.html";
-    private final String DEFAULT_ACCESS_FILE = "AuthUserFile.txt";
+    private final String DEFAULT_ACCESS_FILE = ".htaccess";
     private static ConfigReader single_instance = null; //singleton instance
 
     File configFile;

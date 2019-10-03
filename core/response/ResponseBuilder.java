@@ -52,7 +52,7 @@ public class ResponseBuilder{
             contentLength = fileByteArray.length;
         }
         catch(FileNotFoundException e){
-            System.out.println("Requested file does not exist: " + resource.getResolvedFilePath());
+            System.out.println("ResponseBuilder.java: Requested file does not exist: " + resource.getResolvedFilePath());
         }
         catch(IOException e){
             e.printStackTrace();

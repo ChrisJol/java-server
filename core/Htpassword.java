@@ -19,63 +19,34 @@ import java.io.IOException;
 
     // ConfigReader configuration;
     private HashMap<String, String> passwords;
-    ConfigReader configReader;
+    ConfigReader configuration;
     AuthReader authReader;
 
-    public Htpassword( String fileName ) throws IOException {
-        configReader = ConfigReader.getInstance();
-        authReader = new AuthReader(fileName);
+    public Htpassword( String filename ) throws IOException {
+        configuration = ConfigReader.getInstance();
+        authReader = new AuthReader();
+        authReader.readPasswordFile(configuration.getAccessFile());
     }
 
     public boolean isAuthorized( String authInfo ) {
         // authInfo is provided in the header received from the client
         // as a Base64 encoded string.
-        System.out.println("authInfo " + authInfo);
         String credentials = new String(
         Base64.getDecoder().decode( authInfo ),
         Charset.forName( "UTF-8" )
         );
-        System.out.println(authInfo);
         // The string is the key:value pair username:password
         String[] tokens = credentials.split( ":" );
+        System.out.println(tokens[0] + "\n" + tokens[1]);
 
-        //Look through the .htpassword file and check to see if tokens match username and password in file
+        //Look through the .htpassword file and check to see if tokens[1] match username in .htaccess file
 
-        boolean found = false;
+        String filePath = "/Users/nicolebernardo/Documents/Documents/FALL 2019 CLASSES/CSC 667/Project1/fall-2019-web-server-bernardo_jol/public_html/.htaccess"; //for testing purposes
+        authReader.readAcessFile(filePath);
+       
+        System.out.println(authReader.userHasAccess(tokens[0]));
 
-        String tempUser = "";
-        String tempPass = "";
-        String userVerified = "";
-        String passVerified = "";
-        String filePath = "AuthUserFile.txt"; //for testing purposes
-
-        try {
- 
-            authUserFile = new Scanner(new File(filePath));
-            authUserFile.useDelimiter(":|\n|[{}]"); // using example jrob:{SHA}cRDtpNCeBiql5KOQsKVyrA0sAiA=
-
-            while(authUserFile.hasNext()){
-                tempUser = authUserFile.next();
-                tempPass = authUserFile.next();
-
-                if(tempUser.equals(tokens[0])){
-                    userVerified = tempUser;
-                }
-
-                if(tempPass.equals(tokens[1])){
-                    passVerified = tempPass;
-                }
-
-                if(userVerified.equals(tokens[0]) && passVerified.equals(tokens[1])) {
-                    System.out.println("User is AUTHORIZED");
-                    System.out.println(userVerified + " " + passVerified);
-                    found = true;
-                }
-            }
-        } catch(Exception e) {
-            System.out.println("User is not authorized");
-        }
-        return found;
+        return authReader.userHasAccess(tokens[0]);
     }
 
     private boolean verifyPassword( String username, String password ) {

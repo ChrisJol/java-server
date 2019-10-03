@@ -2,6 +2,8 @@ package core.util;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -10,17 +12,12 @@ import java.io.IOException;
 
 public class AuthReader {
 
-    File authUserFile;
     Map<String, String> authUsers = new HashMap<String, String>();
-    
-    public AuthReader(String fileName){
-        authUserFile = new File(fileName);
-        this.load();
-    }
+    Set<String> users = new HashSet<String>();
 
-    private void load() {
+    public void readPasswordFile(String fileName) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(authUserFile));
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String authUser = reader.readLine();
 
             while(authUser != null) {
@@ -40,7 +37,32 @@ public class AuthReader {
         }
     }
 
-    public String getUserPassword(String user){
+    public void readAcessFile(String fileName) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String user = reader.readLine();
+
+            while(user != null) {
+                users.add(user);
+                user = reader.readLine();
+            }
+            reader.close();
+        } 
+        catch(FileNotFoundException e) {
+            System.out.println("Authreader.java: File not found");
+        } 
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUserPassword(String user) {
         return authUsers.get(user);
     }
+
+    public boolean userHasAccess(String user) {
+        return users.contains(user);
+    }
+
+
 }
