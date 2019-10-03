@@ -19,9 +19,11 @@ public class Server {
             Socket client = socket.accept();
             Request request = new Request();
             request.parse(client);
+
             Htpassword authCheck = new Htpassword(configuration.getAccessFile());
             authCheck.isAuthorized(request.headers.get("Authorization"));
-            System.out.println(request.headers.get("Authorization"));
+            
+
             Resource resource = new Resource(request);
             Response response = new ResponseBuilder(request, resource)
                 .setStatusCode()

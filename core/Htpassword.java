@@ -22,14 +22,15 @@ import java.io.IOException;
     ConfigReader configReader;
     AuthReader authReader;
 
-    public Htpassword( String filename ) throws IOException {
+    public Htpassword( String fileName ) throws IOException {
         configReader = ConfigReader.getInstance();
-        authReader = new AuthReader(configReader.getAccessFile());
+        authReader = new AuthReader(fileName);
     }
 
     public boolean isAuthorized( String authInfo ) {
         // authInfo is provided in the header received from the client
         // as a Base64 encoded string.
+        System.out.println("authInfo " + authInfo);
         String credentials = new String(
         Base64.getDecoder().decode( authInfo ),
         Charset.forName( "UTF-8" )

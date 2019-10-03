@@ -23,11 +23,18 @@ public class Request {
             URI = request[1];
             httpVersion = request[2];
 
+            System.out.println(verb + " " + URI + " " + httpVersion);
+
             String header = reader.readLine(); //read in headers
             while(header.length() > 0) {
                 String[] lineHeaders = header.split(": ");
                 headers.put(lineHeaders[0], lineHeaders[1]);
                 header = reader.readLine();
+            }
+
+            System.out.println("Headers:");
+            for(Map.Entry<String, String> entry : headers.entrySet()) { // headers
+                System.out.println(entry.getKey() + ": " + entry.getValue());
             }
 
             if(headers.get("Content-Length") != null){ //read in body
