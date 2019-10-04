@@ -23,11 +23,6 @@ public class Server {
             Htpassword authCheck = new Htpassword(configuration.getAccessFile());
             authCheck.isAuthorized(request.headers.get("Authorization"));
 
-            System.out.println();
-            
-            Htpassword passCheck = new Htpassword(configuration.getAuthUserFile());
-            passCheck.isAuthorized(request.headers.get("Authorization"));
-
             Resource resource = new Resource(request);
             Response response = new ResponseBuilder(request, resource)
                 .setStatusCode()
