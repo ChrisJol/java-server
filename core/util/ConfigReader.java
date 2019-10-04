@@ -12,6 +12,7 @@ public class ConfigReader {
     private final int DEFAULT_PORT = 8080;
     private final String DEFAULT_DIRECTORY_INDEX = "index.html";
     private final String DEFAULT_ACCESS_FILE = ".htaccess";
+    private final String DEFAULT_AUTHUSER_FILE = ".htpasswd";
     private static ConfigReader single_instance = null; //singleton instance
 
     File configFile;
@@ -48,7 +49,7 @@ public class ConfigReader {
         return ( defaultPort == null ) ? DEFAULT_PORT : Integer.parseInt(defaultPort);
     }
 
-    public String getDirectoryIndex() {
+    public String getDirectoryIndex(){
         String directoryIndex = configParams.get("DirectoryIndex");
         return ( directoryIndex == null ) ? DEFAULT_DIRECTORY_INDEX : directoryIndex;
     }
@@ -64,6 +65,11 @@ public class ConfigReader {
     public String getAccessFile(){
         String accessFile = configParams.get("AccessFile");
         return (accessFile == null) ? DEFAULT_ACCESS_FILE : accessFile;
+    }
+
+    public String getAuthUserFile(){
+        String authUserFile = configParams.get("AuthUserFile");
+        return (authUserFile == null) ? DEFAULT_AUTHUSER_FILE : authUserFile;
     }
 
     private void load(){ //throws indexOutOfBound error when conf isn't formatted properly, we should try to come up with a fix

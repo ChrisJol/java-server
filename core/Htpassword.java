@@ -16,9 +16,6 @@ import java.io.IOException;
     public class Htpassword {
 
     private static Scanner authUserFile;    
-
-    // ConfigReader configuration;
-    private HashMap<String, String> passwords;
     ConfigReader configuration;
     AuthReader authReader;
 
@@ -38,20 +35,29 @@ import java.io.IOException;
         );
         // The string is the key:value pair username:password
         String[] tokens = credentials.split( ":" );
-        // System.out.println(tokens[0] + "\n" + tokens[1]);
+        System.out.println(tokens[0] + "\n" + tokens[1]);
 
-        //Look through the .htpassword file and check to see if tokens[1] match username in .htaccess file
-        
+        //Look through the .htaccess file and check to see if tokens[0] match username in .htaccess file  
         String filePath = configuration.getAccessFile();
         authReader.readAccessFile(filePath);
        
-        System.out.println(authReader.userHasAccess(tokens[0])); //testing purposes
+        System.out.println("Htpassword.java: " + authReader.userHasAccess(tokens[0])); //testing purposes
+
+        //verify the password given from the client's headers, to the one stored in the .htpasswd file
+        String passFilePath = configuration.getAuthUserFile();
+        authReader.readPasswordFile(passFilePath);
+        System.out.println("tokens[0]: " + authReader.getUserPassword(tokens[0]));
+
+        // verifyPassword(tokens[0], tokens[1]);
 
         return authReader.userHasAccess(tokens[0]);
     }
 
     private boolean verifyPassword( String username, String password ) {
+
+        System.out.println("username: " + username + "\n" + "password: " + password);
         // encrypt the password, and compare it to the password stored
+
         // in the password file (keyed by username)
         // TODO: implement this - note that the encryption step is provided as a
         // method, below
