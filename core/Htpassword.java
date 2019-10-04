@@ -25,6 +25,7 @@ import java.io.IOException;
     }
 
     public boolean isAuthorized( String authInfo ) {
+        boolean hasAccess = false;
         if(authInfo != null) {
             String credentials = new String(
             Base64.getDecoder().decode( authInfo ),
@@ -32,13 +33,13 @@ import java.io.IOException;
             );
 
             String[] tokens = credentials.split( ":" );
-            String filePath = configuration.getAccessFile();
-            authReader.readAccessFile(filePath);
-            verifyPassword(tokens[0], tokens[1]);
-
-            return authReader.userHasAccess(tokens[0]);
+            if(authReader.userHasAccess(tokens[0])) {
+                String filePath = configuration.getAccessFile();
+                authReader.readAccessFile(filePath);
+                hasAcess = verifyPassword(tokens[0], tokens[1]);
+            }
         } else {
-            return false;
+            return hasAccess;
         }
     }
 
@@ -47,23 +48,17 @@ import java.io.IOException;
         String passFilePath = configuration.getAuthUserFile();
         authReader.readPasswordFile(passFilePath);
 
-        if(encryptedPass.equals(authReader.getUserPassword(username))){
-            System.out.println("passwords match!");
-            return true;
-        }
-        return false;
+        return encryptedPass.equals(authReader.getUserPassword(username));
     }
 
-    private String encryptClearPassword( String password ) {
-        // Encrypt the cleartext password (that was decoded from the Base64 String
-        // provided by the client) using the SHA-1 encryption algorithm
+    private String encryptClearPassword(String password ) {
         try {
-        MessageDigest mDigest = MessageDigest.getInstance( "SHA-1" );
-        byte[] result = mDigest.digest( password.getBytes() );
+            MessageDigest mDigest = MessageDigest.getInstance( "SHA-1" );
+            byte[] result = mDigest.digest( password.getBytes() );
 
-        return Base64.getEncoder().encodeToString( result );
+            return Base64.getEncoder().encodeToString( result );
         } catch( Exception e ) {
-        return "";
+            return "";
         }
     }
     }
