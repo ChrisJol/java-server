@@ -24,8 +24,6 @@ public class Server {
             Htpassword authCheck = new Htpassword(configuration.getAccessFile());
             authCheck.isAuthorized(request.headers.get("Authorization"));
 
-            MimeReader mimeTypes = new MimeReader();
-
             Resource resource = new Resource(request);
             Response response = new ResponseBuilder(request, resource)
                 .setStatusCode()

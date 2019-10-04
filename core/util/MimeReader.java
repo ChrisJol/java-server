@@ -9,12 +9,21 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class MimeReader{
+    private static MimeReader single_instance = null; //singleton instance
     File mimeTypeFile;
     Map<String, String> mimeTypes = new HashMap<String, String>();
 
-    public MimeReader(){
+    private MimeReader(){
         mimeTypeFile = new File("./conf/mime.types.txt");
         this.load();
+    }
+
+    public MimeReader getInstance(){
+        if(single_instance == null){
+            single_instance = new MimeReader();
+        }
+
+        return single_instance;
     }
 
     private void load(){
