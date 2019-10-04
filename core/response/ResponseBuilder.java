@@ -36,7 +36,7 @@ public class ResponseBuilder{
     }
 
     public ResponseBuilder setHeaders(){
-        headers.put("Content-Type", "image/png");
+        headers.put("Content-Type", "text/html");
         headers.put("Content-Length", String.valueOf(contentLength));
         // headers.put("Content-Disposition", "inline");
         return this;
@@ -44,17 +44,19 @@ public class ResponseBuilder{
 
     public ResponseBuilder setBody(){
         try{
-            File resolvedFile = new File(resource.getResolvedFilePath());
+            File resolvedFile = new File(resource.getURI());
             byte[] fileByteArray = new byte[(int) resolvedFile.length()];
             BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(resolvedFile));
 
             inputStream.read(fileByteArray, 0, fileByteArray.length);
-            // body = fileByteArray;
             body = new String(fileByteArray, "UTF-8");
             contentLength = fileByteArray.length;
+
+            inputStream.close();
         }
         catch(FileNotFoundException e){
-            System.out.println("ResponseBuilder.java: Requested file does not exist: " + resource.getResolvedFilePath());
+            System.out.println("ResponseBuilder.java: Requested file does not exist: " + resource.getURI());
+            e.printStackTrace();
         }
         catch(IOException e){
             e.printStackTrace();

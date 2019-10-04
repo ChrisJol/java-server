@@ -1,6 +1,7 @@
 package core.response;
 
 import java.io.PrintWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.HashMap;

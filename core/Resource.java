@@ -10,9 +10,10 @@ public class Resource{
     Resource(Request request){
         this.URI = request.URI;
         configuration = ConfigReader.getInstance();
+        this.getResolvedFilePath();
     }
 
-    public String getResolvedFilePath(){
+    private String getResolvedFilePath(){
         URI = isScript() ? configuration.getAlias(URI) : absolutePath();
         File resolvedFile = new File( URI );
 
@@ -27,5 +28,9 @@ public class Resource{
 
     private boolean isScript(){
         return configuration.getScriptAlias(URI) != null;
+    }
+
+    public String getURI(){
+        return URI;
     }
 }
