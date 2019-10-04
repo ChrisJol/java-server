@@ -36,8 +36,9 @@ public class ResponseBuilder{
     }
 
     public ResponseBuilder setHeaders(){
-        headers.put("Content-Type", "text/html");
+        headers.put("Content-Type", "image/png");
         headers.put("Content-Length", String.valueOf(contentLength));
+        // headers.put("Content-Disposition", "inline");
         return this;
     }
 
@@ -48,6 +49,7 @@ public class ResponseBuilder{
             BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(resolvedFile));
 
             inputStream.read(fileByteArray, 0, fileByteArray.length);
+            // body = fileByteArray;
             body = new String(fileByteArray, "UTF-8");
             contentLength = fileByteArray.length;
         }

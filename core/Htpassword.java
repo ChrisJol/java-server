@@ -36,11 +36,10 @@ import java.io.IOException;
             if(authReader.userHasAccess(tokens[0])) {
                 String filePath = configuration.getAccessFile();
                 authReader.readAccessFile(filePath);
-                hasAcess = verifyPassword(tokens[0], tokens[1]);
+                hasAccess = verifyPassword(tokens[0], tokens[1]);
             }
-        } else {
-            return hasAccess;
         }
+        return hasAccess;
     }
 
     private boolean verifyPassword( String username, String password ) {

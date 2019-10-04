@@ -1,7 +1,8 @@
 package core;
 
-import core.util.AuthReader;
 import core.util.ConfigReader;
+import core.util.AuthReader;
+import core.util.MimeReader;
 import core.response.*;
 import java.net.Socket;
 import java.net.ServerSocket;
@@ -22,6 +23,8 @@ public class Server {
 
             Htpassword authCheck = new Htpassword(configuration.getAccessFile());
             authCheck.isAuthorized(request.headers.get("Authorization"));
+
+            MimeReader mimeTypes = new MimeReader();
 
             Resource resource = new Resource(request);
             Response response = new ResponseBuilder(request, resource)
