@@ -1,17 +1,19 @@
 package core;
 
-import java.io.*;
+import core.util.ConfigReader;
+import java.io.File;
 
 public class Resource{
     String URI;
     ConfigReader configuration;
 
-    Resource(String uri){
-        this.URI = uri;
+    Resource(Request request){
+        this.URI = request.URI;
         configuration = ConfigReader.getInstance();
+        this.getResolvedFilePath();
     }
 
-    public String getResolvedFilePath(){
+    private String getResolvedFilePath(){
         URI = isScript() ? configuration.getAlias(URI) : absolutePath();
         File resolvedFile = new File( URI );
 
@@ -25,6 +27,10 @@ public class Resource{
     }
 
     private boolean isScript(){
-        return configuration.getAlias(URI) != null;
+        return configuration.getScriptAlias(URI) != null;
+    }
+
+    public String getURI(){
+        return URI;
     }
 }
