@@ -25,6 +25,10 @@ public class Server {
             authCheck.isAuthorized(request.headers.get("Authorization"));
 
             Resource resource = new Resource(request);
+
+            Operations op = new Operations();
+            op.PUT("/Users/chris/Desktop/fall-2019-web-server-bernardo_jol/public_html/blah.html");
+
             Response response = new ResponseBuilder(request, resource)
                 .setStatusCode()
                 .setReasonPhrase()
