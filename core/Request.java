@@ -1,5 +1,6 @@
 package core;
 
+import core.util.ConfigReader;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,6 +14,11 @@ public class Request {
     String httpVersion;
     Map<String, String> headers = new HashMap<String, String>();
     StringBuilder body;
+    ConfigReader configuration;
+
+    public Request(){
+        configuration = ConfigReader.getInstance();
+    }
 
     public void parse(Socket client) {
         try{
@@ -41,5 +47,22 @@ public class Request {
         catch(IOException e){
             e.printStackTrace();
         }
+    }
+    
+    public String executeRequest(String request){
+        //TODO: make into switch statement, possibly move into another class
+        if(request.equals("PUT")){
+            System.out.println("PUT was accessed");
+            return configuration.getDocRoot()+URI;
+        } else if(request.equals("GET")){
+            System.out.println("GET was accessed");
+        } else if(request.equals("DELETE")){
+            System.out.println("DELETE was accessed");
+            return configuration.getDocRoot()+URI;
+        }
+        else {
+            return "";
+        }
+        return "";
     }
 }

@@ -27,7 +27,9 @@ public class Server {
             Resource resource = new Resource(request);
 
             Operations op = new Operations();
-            op.PUT("/Users/chris/Desktop/fall-2019-web-server-bernardo_jol/public_html/blah.html");
+            // op.POST();
+            op.PUT(request.executeRequest(request.verb));
+            // op.DELETE(request.executeRequest(request.verb));
 
             Response response = new ResponseBuilder(request, resource)
                 .setStatusCode()
