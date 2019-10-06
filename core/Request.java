@@ -9,15 +9,31 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Request {
-    String URI;
-    String verb;
-    String httpVersion;
-    Map<String, String> headers = new HashMap<String, String>();
-    StringBuilder body;
+    private String URI;
+    private String verb;
+    private String httpVersion;
+    private Map<String, String> headers = new HashMap<String, String>();
+    private String body;
     ConfigReader configuration;
 
     public Request(){
         configuration = ConfigReader.getInstance();
+    }
+
+    public String getURI(){
+        return URI;
+    }
+    
+    public String getVerb(){
+        return verb;
+    }
+
+    public Map<String, String> getHeaders(){
+        return headers;
+    }
+
+    public String getBody(){
+        return body;
     }
 
     public void parse(Socket client) {
@@ -36,33 +52,17 @@ public class Request {
                 header = reader.readLine();
             }
 
-            if(headers.get("Content-Length") != null){ //read in body
-                String requestBody = reader.readLine();
-                while (requestBody != null) {
-                    body.append(requestBody).append("\r\n");
-                    requestBody = reader.readLine();
-                }
+            if(headers.containsKey("Content-Length")){ //read in body
+                int length = Integer.parseInt(headers.get("Content-Length"));
+                char[] bodyBuffer = new char[length];
+                reader.read(bodyBuffer, 0, length);
+                body = String.valueOf(bodyBuffer);
             }
+
+            System.out.println(body);
         }
         catch(IOException e){
             e.printStackTrace();
         }
-    }
-    
-    public String executeRequest(String request){
-        //TODO: make into switch statement, possibly move into another class
-        if(request.equals("PUT")){
-            System.out.println("PUT was accessed");
-            return configuration.getDocRoot()+URI;
-        } else if(request.equals("GET")){
-            System.out.println("GET was accessed");
-        } else if(request.equals("DELETE")){
-            System.out.println("DELETE was accessed");
-            return configuration.getDocRoot()+URI;
-        }
-        else {
-            return "";
-        }
-        return "";
     }
 }

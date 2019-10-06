@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.io.File;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import core.Request;
 import core.Resource;
 
-public class ResponseBuilder{
+public class ResponseFactory{
     Request request;
     Resource resource;
 
@@ -20,29 +22,42 @@ public class ResponseBuilder{
     String body;
     int contentLength;
 
-    public ResponseBuilder(Request request, Resource resource){
+    public ResponseFactory(Request request, Resource resource){
         this.request = request;
         this.resource = resource;
     }
 
-    public ResponseBuilder setStatusCode(){
-        statusCode = 200;
-        return this;
+    private void PUT(String filePath){
+
+        try{
+            File newFile = new File(filePath);
+
+            if (newFile.createNewFile()) {
+                System.out.println("File created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+
+            FileWriter writer = new FileWriter(newFile.getName());
+            // writer.write("I'm writing to a file");
+            writer.close();
+
+        //     File newFile = new File(filePath);
+        //     if(newFile.createNewFile()){
+        //         BufferedWriter fileOut = new BufferedWriter(new FileWriter(newFile.getName()));
+
+        //         return "201";
+        //     }
+        //     else{
+        //         return "500";
+        //     }
+        }
+        catch(IOException e){
+            System.out.println("Operations.java: File not created");
+        }
     }
 
-    public ResponseBuilder setReasonPhrase(){
-        reasonPhrase = "OK";
-        return this;
-    }
-
-    public ResponseBuilder setHeaders(){
-        headers.put("Content-Type", "text/html");
-        headers.put("Content-Length", String.valueOf(contentLength));
-        // headers.put("Content-Disposition", "inline");
-        return this;
-    }
-
-    public ResponseBuilder setBody(){
+    public ResponseFactory setBody(){
         try{
             File resolvedFile = new File(resource.getURI());
             byte[] fileByteArray = new byte[(int) resolvedFile.length()];

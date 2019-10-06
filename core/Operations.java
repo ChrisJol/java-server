@@ -22,7 +22,7 @@ public class Operations {
             File newFile = new File(filePath);
 
             if (newFile.createNewFile()) {
-                System.out.println("File is created!");
+                System.out.println("File created!");
             } else {
                 System.out.println("File already exists.");
             }
@@ -43,7 +43,7 @@ public class Operations {
         //     }
         }
         catch(IOException e){
-            System.out.println("File not created");
+            System.out.println("Operations.java: File not created");
         }
         finally{
             return "500";

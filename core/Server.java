@@ -18,26 +18,22 @@ public class Server {
 
         while( true ) {
             Socket client = socket.accept();
+
+            //parse request
             Request request = new Request();
             request.parse(client);
 
+            //check authorization
             Htpassword authCheck = new Htpassword(configuration.getAccessFile());
-            authCheck.isAuthorized(request.headers.get("Authorization"));
+            authCheck.isAuthorized(request.getHeaders().get("Authorization"));
 
+            //create resource
             Resource resource = new Resource(request);
 
-            Operations op = new Operations();
-            // op.POST();
-            op.PUT(request.executeRequest(request.verb));
-            // op.DELETE(request.executeRequest(request.verb));
-
-            Response response = new ResponseBuilder(request, resource)
-                .setStatusCode()
-                .setReasonPhrase()
-                .setBody()
-                .setHeaders()
-                .build();
+            //send response
+            Response response = new ResponseFactory(request, resource).build();
             response.send(client.getOutputStream());
+
             client.close();
         }
     }

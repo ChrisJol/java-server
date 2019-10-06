@@ -8,7 +8,7 @@ public class Resource{
     ConfigReader configuration;
 
     Resource(Request request){
-        this.URI = request.URI;
+        this.URI = request.getURI();
         configuration = ConfigReader.getInstance();
         this.getResolvedFilePath();
     }
