@@ -14,11 +14,6 @@ public class Request {
     String httpVersion;
     Map<String, String> headers = new HashMap<String, String>();
     StringBuilder body;
-    ConfigReader configuration;
-
-    public Request(){
-        configuration = ConfigReader.getInstance();
-    }
 
     public void parse(Socket client) {
         try{
