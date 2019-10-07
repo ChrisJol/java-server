@@ -15,11 +15,6 @@ public class Request {
     private String httpVersion;
     private Map<String, String> headers = new HashMap<String, String>();
     private String body;
-    ConfigReader configuration;
-
-    public Request(){
-        configuration = ConfigReader.getInstance();
-    }
 
     public String getURI(){
         return URI;
