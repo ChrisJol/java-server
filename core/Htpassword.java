@@ -2,6 +2,7 @@ package core;
 
 import core.util.AuthReader;
 import core.util.ConfigReader;
+import core.util.Logger;
 import java.util.Base64;
 import java.util.Map;
 import java.util.HashMap;
@@ -22,7 +23,6 @@ import java.io.IOException;
         configuration = ConfigReader.getInstance();
         authReader = new AuthReader();
         authFile = new File(new File(fileName).getParent() + "/" + configuration.getAccessFile());
-        authReader.readAccessFile(authFile.getAbsolutePath());
         if(!authFile.exists()){
             hasAccess = true;
             accessFileExists = false;
@@ -31,12 +31,15 @@ import java.io.IOException;
 
     public boolean isAuthorized( String authInfo ) {
         if(authInfo != null && accessFileExists) {
+            authReader.readAccessFile(authFile.getAbsolutePath());
             String credentials = new String(
             Base64.getDecoder().decode( authInfo ),
             Charset.forName( "UTF-8" )
             );
 
             String[] tokens = credentials.split( ":" );
+
+            Logger.user = tokens[0]; //Log username
 
             if(authReader.userHasAccess(tokens[0])) {
                 String filePath = configuration.getAccessFile();

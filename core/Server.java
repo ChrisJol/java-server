@@ -1,11 +1,11 @@
 package core;
 
-import core.util.ConfigReader;
-import core.util.MimeReader;
+import core.util.*;
 import core.response.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.io.IOException;
+import java.util.Date;
 
 public class Server {
     public final String configFilePath = "./conf/httpd.conf.txt";
@@ -18,6 +18,9 @@ public class Server {
         while( true ) {
             Socket client = socket.accept();
 
+            //Start Log
+            Logger log = new Logger();
+
             //parse request
             Request request = new Request();
             request.parse(client);
@@ -28,6 +31,9 @@ public class Server {
             //send response
             Response response = new ResponseFactory(request, resource).build();
             response.send(client.getOutputStream());
+
+            Logger.timeOfCompletion = new Date();
+            log.log();
 
             client.close();
         }

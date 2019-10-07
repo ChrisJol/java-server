@@ -1,6 +1,7 @@
 package core;
 
 import core.util.ConfigReader;
+import core.util.Logger;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,10 +41,12 @@ public class Request {
         try{
             BufferedReader reader = new BufferedReader( new InputStreamReader(client.getInputStream()) );
 
-            String[] request = reader.readLine().split(" "); //read in HTTP request
-            verb = request[0];
-            URI = request[1];
-            httpVersion = request[2];
+            String request = reader.readLine(); //read in HTTP request
+            Logger.request = request; //log
+            String[] requests = request.split(" ");
+            verb = requests[0];
+            URI = requests[1];
+            httpVersion = requests[2];
 
             String header = reader.readLine(); //read in headers
             while(header.length() > 0) {

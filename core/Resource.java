@@ -7,14 +7,31 @@ public class Resource{
     String URI;
     ConfigReader configuration;
 
-    Resource(Request request){
+    public Resource(Request request){
         this.URI = request.getURI();
         configuration = ConfigReader.getInstance();
         this.getResolvedFilePath();
     }
 
+    public boolean isScript(){
+        return configuration.getScriptAlias(URI) != null;
+    }
+
+    public boolean isAlias(){
+        return configuration.getAlias(URI) != null;
+    }
+
     private String getResolvedFilePath(){
-        URI = isScript() ? configuration.getAlias(URI) : absolutePath();
+        if(isScript()){
+            URI = configuration.getScriptAlias(URI);
+        }
+        else if(isAlias()){
+            URI = configuration.getAlias(URI);
+        }
+        else {
+            URI = absolutePath();
+        }
+
         File resolvedFile = new File( URI );
 
         if( resolvedFile.isDirectory() ) URI += "/" + configuration.getDirectoryIndex();
@@ -23,11 +40,14 @@ public class Resource{
     }
 
     private String absolutePath(){
-        return  configuration.getDocRoot() + URI;
-    }
+        String path = configuration.getDocRoot();
+        String[] roots = URI.split("/");
 
-    private boolean isScript(){
-        return configuration.getScriptAlias(URI) != null;
+        for(int i = 1; i < roots.length; i++){
+            path += "/" + roots[i];
+        }
+
+        return path;
     }
 
     public String getURI(){

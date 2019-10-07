@@ -6,8 +6,6 @@ import java.util.Date;
 import java.io.File;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,7 +58,8 @@ public class ResponseFactory{
             }
         }
         catch(IOException e){
-            System.out.println("Operations.java: File not created");
+            statusCode = 400;
+            reasonPhrase = "Bad Request";
         }
     }
 
@@ -96,16 +95,12 @@ public class ResponseFactory{
             inputStream.close();
         }
         catch(FileNotFoundException e){
-            System.out.println("ResponseBuilder.java: Requested file does not exist: " + resource.getURI());
-
             statusCode = 404;
             reasonPhrase = "Not Found";
         }
         catch(IOException e){
-            e.printStackTrace();
-
-            statusCode = 404;
-            reasonPhrase = "Not Found";
+            statusCode = 400;
+            reasonPhrase = "Bad Request";
         }
     }
 
@@ -114,8 +109,6 @@ public class ResponseFactory{
 
         String lastModifiedHeader = request.getHeaders().get("Last-Modified");
         String lastModifiedFile = new SimpleDateFormat("EEE, d MMM yyy HH:mm:ss z").format(new Date(file.lastModified()));
-
-        System.out.println(lastModifiedFile + "\n" + lastModifiedHeader);
 
         if(lastModifiedFile.equals(lastModifiedHeader)){
             headers.put("Last-Modified", lastModifiedFile);

@@ -11,8 +11,9 @@ import java.util.HashMap;
 public class ConfigReader {
     private final int DEFAULT_PORT = 8080;
     private final String DEFAULT_DIRECTORY_INDEX = "index.html";
-    private final String DEFAULT_ACCESS_FILE = ".htaccess";
-    private final String DEFAULT_AUTHUSER_FILE = "./conf/.htpasswd";
+    private final String DEFAULT_ACCESS_FILE = ".htaccess.txt";
+    private final String DEFAULT_AUTHUSER_FILE = "/auth/.htpasswd.txt";
+    private final String DEFAULT_LOG_FILE = "/logs/log.txt";
     private static ConfigReader single_instance = null; //singleton instance
 
     File configFile;
@@ -41,7 +42,8 @@ public class ConfigReader {
     }
 
     public String getLogFile(){
-        return configParams.get("LogFile");
+        String logFile = configParams.get("LogFile");
+        return (logFile == null) ? DEFAULT_LOG_FILE : logFile;
     }
 
     public int getDefaultPort(){
