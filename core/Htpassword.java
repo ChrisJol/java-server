@@ -2,8 +2,6 @@ package core;
 
 import core.util.AuthReader;
 import core.util.ConfigReader;
-
-import java.util.Scanner;
 import java.util.Base64;
 import java.util.Map;
 import java.util.HashMap;
@@ -20,7 +18,7 @@ import java.io.IOException;
     boolean accessFileExists = true;
     File authFile;
 
-    public Htpassword( String fileName ) throws IOException {
+    public Htpassword( String fileName ) {
         configuration = ConfigReader.getInstance();
         authReader = new AuthReader();
         authFile = new File(new File(fileName).getParent() + "/" + configuration.getAccessFile());

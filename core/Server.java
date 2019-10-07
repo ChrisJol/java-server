@@ -1,7 +1,6 @@
 package core;
 
 import core.util.ConfigReader;
-import core.util.AuthReader;
 import core.util.MimeReader;
 import core.response.*;
 import java.net.Socket;
@@ -26,13 +25,9 @@ public class Server {
             //create resource
             Resource resource = new Resource(request);
 
-            //check authorization
-            Htpassword authCheck = new Htpassword(resource.getURI());
-            if(authCheck.isAuthorized(request.getHeaders().get("Authorization"))){
-                //send response
-                Response response = new ResponseFactory(request, resource).build();
-                response.send(client.getOutputStream());
-            }
+            //send response
+            Response response = new ResponseFactory(request, resource).build();
+            response.send(client.getOutputStream());
 
             client.close();
         }

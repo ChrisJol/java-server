@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import core.Request;
 import core.Resource;
-import core.util.ConfigReader;
-import core.util.MimeReader;
+import core.Htpassword;
+import core.util.*;
 import core.response.*;
 
 public class ResponseFactory{
@@ -23,12 +23,11 @@ public class ResponseFactory{
     Resource resource;
     ConfigReader configuration;
     MimeReader mimeTypes;
-
     int statusCode;
-    String reasonPhrase;
-    Map<String, String> headers = new HashMap<String, String>();
-    String body;
     int contentLength;
+    String reasonPhrase;
+    String body;
+    Map<String, String> headers = new HashMap<String, String>();
 
     public ResponseFactory(Request request, Resource resource){
         this.request = request;
@@ -139,12 +138,20 @@ public class ResponseFactory{
     }
 
     public Response build(){
-        switch(request.getVerb()){
-            case "PUT": PUT(); break;
-            case "DELETE": DELETE(); break;
-            case "POST": POST(); break;
-            case "GET": GET(); break;
-            case "HEAD": HEAD(); break;
+        //check authorization
+        Htpassword authCheck = new Htpassword(resource.getURI());
+        if(authCheck.isAuthorized(request.getHeaders().get("Authorization"))){
+            switch(request.getVerb()){
+                case "PUT": PUT(); break;
+                case "DELETE": DELETE(); break;
+                case "POST": POST(); break;
+                case "GET": GET(); break;
+                case "HEAD": HEAD(); break;
+            }
+        }
+        else{
+            statusCode = 401;
+            reasonPhrase = "Unauthorized";
         }
 
         Response response = new Response();
