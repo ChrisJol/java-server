@@ -18,7 +18,7 @@ public class MimeReader{
         this.load();
     }
 
-    public MimeReader getInstance(){
+    public static MimeReader getInstance(){
         if(single_instance == null){
             single_instance = new MimeReader();
         }

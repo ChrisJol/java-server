@@ -58,8 +58,6 @@ public class Request {
                 reader.read(bodyBuffer, 0, length);
                 body = String.valueOf(bodyBuffer);
             }
-
-            System.out.println(body);
         }
         catch(IOException e){
             e.printStackTrace();

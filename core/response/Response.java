@@ -22,7 +22,7 @@ public class Response{
         }
 
         printWriter.println(); // empty line
-        printWriter.println(body); //body
+        if(headers.containsKey("Content-Length")) printWriter.println(body); //body
         printWriter.flush(); //send
         printWriter.close();
     }
