@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import core.Request;
 import core.Resource;
 import core.util.ConfigReader;
@@ -109,11 +110,41 @@ public class ResponseFactory{
         }
     }
 
+    private void GET(){
+        File file = new File(resource.getURI());
+
+        String lastModifiedHeader = request.getHeaders().get("Last-Modified");
+        String lastModifiedFile = new SimpleDateFormat("EEE, d MMM yyy HH:mm:ss z").format(new Date(file.lastModified()));
+
+        System.out.println(lastModifiedFile + "\n" + lastModifiedHeader);
+
+        if(lastModifiedFile.equals(lastModifiedHeader)){
+            headers.put("Last-Modified", lastModifiedFile);
+            statusCode = 304;
+            reasonPhrase = "Not Modified";
+        }
+        else{
+            POST();
+        }
+    }
+
+    private void HEAD(){
+        File resolvedFile = new File(resource.getURI());
+        String[] fileNameArray = resolvedFile.getName().split("\\.");
+        headers.put("Content-Type", mimeTypes.getMimeType(fileNameArray[1]));
+        headers.put("Content-Length", String.valueOf(resolvedFile.length()));
+
+        statusCode = 200;
+        reasonPhrase = "OK";
+    }
+
     public Response build(){
         switch(request.getVerb()){
             case "PUT": PUT(); break;
             case "DELETE": DELETE(); break;
             case "POST": POST(); break;
+            case "GET": GET(); break;
+            case "HEAD": HEAD(); break;
         }
 
         Response response = new Response();
