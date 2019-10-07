@@ -23,16 +23,16 @@ public class Server {
             Request request = new Request();
             request.parse(client);
 
-            //check authorization
-            Htpassword authCheck = new Htpassword(configuration.getAccessFile());
-            authCheck.isAuthorized(request.getHeaders().get("Authorization"));
-
             //create resource
             Resource resource = new Resource(request);
 
-            //send response
-            Response response = new ResponseFactory(request, resource).build();
-            response.send(client.getOutputStream());
+            //check authorization
+            Htpassword authCheck = new Htpassword(resource.getURI());
+            if(authCheck.isAuthorized(request.getHeaders().get("Authorization"))){
+                //send response
+                Response response = new ResponseFactory(request, resource).build();
+                response.send(client.getOutputStream());
+            }
 
             client.close();
         }

@@ -12,7 +12,7 @@ public class ConfigReader {
     private final int DEFAULT_PORT = 8080;
     private final String DEFAULT_DIRECTORY_INDEX = "index.html";
     private final String DEFAULT_ACCESS_FILE = ".htaccess";
-    private final String DEFAULT_AUTHUSER_FILE = ".htpasswd";
+    private final String DEFAULT_AUTHUSER_FILE = "./conf/.htpasswd";
     private static ConfigReader single_instance = null; //singleton instance
 
     File configFile;

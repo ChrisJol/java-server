@@ -30,7 +30,7 @@ public class AuthReader {
             reader.close();
         } 
         catch(FileNotFoundException e) {
-            System.out.println("AutheReader.java readPass: File not found");
+            System.out.println("AutheReader.java File not found: " + fileName);
         } 
         catch(IOException e) {
             e.printStackTrace();
