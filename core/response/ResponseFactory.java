@@ -33,7 +33,8 @@ public class ResponseFactory{
         configuration = ConfigReader.getInstance();
         mimeTypes = MimeReader.getInstance();
 
-        headers.put("Date", new Date().toString());
+        String date = new SimpleDateFormat("EEE, d MMM yyy HH:mm:ss z").format(new Date());
+        headers.put("Date", date);
         headers.put("Server", "Bernardo_Jol");
     }
 
